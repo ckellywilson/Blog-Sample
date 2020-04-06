@@ -5,15 +5,16 @@ _Prep your enviornment_
 * Install latest version of [.NET Core](https://dotnet.microsoft.com/download)
 * Install [PowerShell Core](https://github.com/powershell/powershell)
 * Open PowerShell Core
-  * Check .NET Core version by running the following command: dotnet --version
-  * Ensure Entity Framework Core is installed by running the following command: dotnet ef
+  * Check .NET Core version by running the following command: `dotnet --version`
+  * Ensure Entity Framework Core is installed by running the following command: `dotnet ef`
 
 _Set-up PostgreSQL on Docker_
 This code sample uses PostgreSQL as the backend database. The easiest way to run the sample database is via a [Docker](https://docker.io)
 * Install [Docker Community Edition](https://docs.docker.com/install/) and ensure the docker engine is running by running the following command: docker run hello-world
 * Install [PgAdmin](https://www.pgadmin.org/download/) which will install the psql command-line tools which you can use later
 * Execute the following shell script in the repository to create the docker container: `src/ShellScripts/blog-pg-container-initialize.sh`. If on Windows, then copy the contents of the file and execute.
-* To see the running container, execute the following command: docker ps
+* To see the running container, execute the following command: `docker ps`
+* **Note the IP of the machine where the container is running so you can use this information to connect to the PostgreSQL instance on Port 5433**
 
 _Create Database_
 * Clone this repository
