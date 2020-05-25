@@ -19,7 +19,7 @@ namespace Blog.PostgreSQL.Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<BlogEntry>> GetAll(Expression<Func<BlogEntry, bool>> predicate = null)
+        public async Task<IEnumerable<BlogEntry>> GetAllAsync(Expression<Func<BlogEntry, bool>> predicate = null)
         {
             return predicate != null
                 ? await _context.BlogEntries.Where(predicate).ToListAsync()
@@ -34,9 +34,9 @@ namespace Blog.PostgreSQL.Repository
                 (current, includeProperty) => current.Include(includeProperty));
         }
 
-        public async Task<IEnumerable<BlogEntry>> Get(int id, params Expression<Func<BlogEntry, object>>[] includeProperties)
+        public async Task<BlogEntry> GetAsync(int id, params Expression<Func<BlogEntry, object>>[] includeProperties)
         {
-            return await GetAllIncludingProperties(includeProperties).Where(t => t.Id == id).ToListAsync();
+            return await GetAllIncludingProperties(includeProperties).FirstOrDefaultAsync(t => t.Id == id);
         }
     }
 }

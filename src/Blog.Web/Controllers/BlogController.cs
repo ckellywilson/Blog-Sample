@@ -23,7 +23,7 @@ namespace Blog.Web.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BlogEntry>>> Get()
         {
-            var results = await _repository.GetAll();
+            var results = await _repository.GetAllAsync();
 
             if (!results.Any())
                 return NoContent();
@@ -33,7 +33,7 @@ namespace Blog.Web.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BlogEntry>> Get(int id)
         {
-            var result = await _repository.Get(id, t => t.BlogPosts);
+            var result = await _repository.GetAsync(id, t => t.BlogPosts);
 
             if (result == null)
                 return NoContent();
