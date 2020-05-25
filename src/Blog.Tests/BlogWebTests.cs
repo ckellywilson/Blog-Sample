@@ -12,6 +12,9 @@ using Xunit;
 
 namespace Blog.Tests
 {
+    /// <summary>
+    /// Tests configured as per documentation https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/testing?view=aspnetcore-3.1#test-actionresultt
+    /// </summary>
     public class BlogWebTests
     {
         [Fact]
