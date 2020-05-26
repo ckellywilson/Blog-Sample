@@ -9,7 +9,7 @@ namespace Blog.PostgreSQL.EF.EntityConfigurations
         public void Configure(EntityTypeBuilder<BlogPost> builder)
         {
             builder.ToTable("blog_post").HasKey(p => p.Id).HasName("blog_post_pkey");
-            builder.Property(p => p.Id).UseNpgsqlSerialColumn().HasColumnName("blog_post_id");
+            builder.Property(p => p.Id).UseSerialColumn().HasColumnName("blog_post_id");
             builder.Property(p => p.BlogPostComment).HasColumnType("text").HasColumnName("blog_post_comment").IsRequired();
             builder.Property(p => p.BlogPostDate).HasColumnType("timestamp with time zone").HasColumnName("blog_post_date")
                 .IsRequired();
