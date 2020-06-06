@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Blog.Web/bin/Debug/netcoreapp2.2/Blog.Web.dll",
+            "program": "${workspaceFolder}/Blog.Web/bin/Debug/netcoreapp3.1/Blog.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Blog.Web",
             "stopAtEntry": false,
