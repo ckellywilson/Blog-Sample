@@ -4,6 +4,7 @@ using Blog.PostgreSQL.Repository;
 using Blog.Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,8 +19,7 @@ namespace Blog.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            Configuration = configuration;
-            _connectionString = configuration.GetConnectionString("blog");
+            _connectionString = Configuration.GetConnectionString("blog");
         }
 
         public IConfiguration Configuration { get; }
@@ -33,7 +33,7 @@ namespace Blog.Web
 
             services.AddMvc()
                 .AddNewtonsoftJson(
-                    options => options.SerializerSettings.ReferenceLoopHandling = 
+                    options => options.SerializerSettings.ReferenceLoopHandling =
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
         }
@@ -41,6 +41,12 @@ namespace Blog.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //configure to use forwarded headers
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
