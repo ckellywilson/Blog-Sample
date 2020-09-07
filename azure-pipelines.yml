@@ -49,20 +49,8 @@ steps:
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Generate Blog.Web'
-  inputs:
-    command: publish
-    publishWebProjects: True
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/blog.web'
-    zipAfterPublish: True
-
-# this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish blog.web artifact'
-  inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)/blog.web' 
-    artifactName: 'blog.web'
+- publish: $(System.DefaultWorkingDirectory)/bin/blogweb
+  artifact: blogweb
 
 
 
