@@ -50,6 +50,7 @@ steps:
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Publish Artifacts'
   inputs:
     command: publish
     projects: '**/Blog.Web/Blog.Web.csproj'
