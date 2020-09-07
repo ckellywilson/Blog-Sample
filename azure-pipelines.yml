@@ -49,8 +49,5 @@ steps:
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
-- publish: $(System.DefaultWorkingDirectory)/bin/blogweb
+- publish: '$(System.DefaultWorkingDirectory)/bin/blogweb'
   artifact: blogweb
-
-
-
