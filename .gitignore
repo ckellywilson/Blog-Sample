@@ -3,3 +3,5 @@ bin
 .idea
 .vs
 *.csproj.user
+TestResults
+.vscode
