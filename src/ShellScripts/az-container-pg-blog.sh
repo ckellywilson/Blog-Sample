@@ -1,8 +1,8 @@
 # set variables
 echo Set Variables....
-resourcegroup=blog-$RANDOM
+resourcegroup=rsblog
 dnsnamelabel=blog-pg-115
-container=blog-pg-115-$RANDOM
+container=blog-pg-115
 host=$dnsnamelabel.southcentralus.azurecontainer.io
 efcorepath='../Blog.PostgreSQL.EF/Blog.PostgreSQL.EF.csproj'
 scriptpath='../Blog.PostgreSQL/post-deploymentscripts/blog_entry_insert.sql'
