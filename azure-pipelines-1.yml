@@ -16,7 +16,7 @@ stages:
     displayName: 'Build QA'
 
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'ubuntu-latest'
     
     jobs:
       - job: 
@@ -69,6 +69,8 @@ stages:
             pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
             artifactName: 'ckw-blog'
   - stage: DeployPostgreSQL
+    pool:
+      vmImage: 'ubuntu-latest'
     displayName: 'Deploy PostgreSQL'
     dependsOn: BuildQA
     condition: Succeeded('BuildQA')
