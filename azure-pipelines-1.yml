@@ -6,9 +6,6 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
-
 variables:
     solution: '**/*.sln'
     buildPlatform: 'Any CPU'
@@ -17,6 +14,9 @@ variables:
 stages:
   - stage: BuildQA
     displayName: 'Build QA'
+    
+    pool:
+      vmImage: 'ubuntu-latest'
     
     jobs:
       - job: 
@@ -72,6 +72,10 @@ stages:
     displayName: 'Deploy PostgreSQL'
     dependsOn: BuildQA
     condition: Succeeded('BuildQA')
+    
+    pool:
+      vmImage: 'ubuntu-latest'
+
     jobs:
       - job:
         displayName: 'Create PG Container'
