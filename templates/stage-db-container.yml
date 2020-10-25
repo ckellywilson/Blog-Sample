@@ -7,4 +7,4 @@ stages:
     steps:
     - task: Bash@3
       inputs:
-        filePath: '../src/ShellScripts/az-container-pg-blog.sh'
+        filePath: '$(Build.SourcesDirectory)/ShellScripts/az-container-pg-blog.sh'
