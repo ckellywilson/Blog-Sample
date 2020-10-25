@@ -1,0 +1,62 @@
+parameters:
+  solution: ''
+  buildPlatform: ''
+  buildConfiguration: ''
+
+stages:
+- stage: BuildQA
+    displayName: 'Build QA'
+    
+    pool:
+      vmImage: 'ubuntu-latest'
+    
+    jobs:
+      - job: 
+        displayName: 'Build'
+
+        steps:
+        - task: UseDotNet@2
+          displayName: 'Install 3.1 version of .NET Core'
+          inputs:
+            version: '3.1.x'
+
+        - task: DotNetCoreCLI@2
+          displayName: 'Install Entity Framework'
+          inputs:
+            command: custom
+            custom: tool
+            arguments: 'install --global dotnet-ef'
+
+        - task: NuGetToolInstaller@1
+          displayName: 'Install NuGet tools'
+
+        - task: NuGetCommand@2
+          displayName: 'Restore solution'
+          inputs:
+            restoreSolution: '$(parameters.solution)'
+
+        - task: DotNetCoreCLI@2
+          displayName: 'Build Solution'
+          inputs:
+            command: build
+            projects: '$(parameters.solution)'
+            arguments: '--configuration $(parameters.buildConfiguration)'
+
+        - task: DotNetCoreCLI@2
+          displayName: 'Execute Unit Tests'
+          inputs:
+            command: test
+            projects: '**/*Tests/*.csproj'
+            arguments: '--configuration $(parameters.buildConfiguration)'
+
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: publish
+            arguments: '--configuration $(parameters.buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+            zipAfterPublish: True
+
+        # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
+        - task: PublishBuildArtifacts@1
+          inputs:
+            pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+            artifactName: 'ckw-blog'
