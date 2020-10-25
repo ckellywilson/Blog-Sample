@@ -38,5 +38,3 @@ stages:
         command: custom
         custom: tool
         arguments: 'install --global dotnet-ef'
-
-    - task: Bash@3
