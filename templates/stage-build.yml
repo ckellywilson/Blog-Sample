@@ -40,8 +40,8 @@ stages:
           displayName: Build Solution
           inputs:
             command: build
-            projects: ${{parameters.solution}}
-            arguments: --configuration ${{ parameters.buildConfiguration }}
+            projects: '${{ parameters.solution }}'
+            arguments: '--configuration ${{ parameters.buildConfiguration }}'
 
         - task: DotNetCoreCLI@2
           displayName: Execute Unit Tests
@@ -56,8 +56,8 @@ stages:
             arguments: --configuration ${{ parameters.buildConfiguration }} --output ${{ parameters.artifactStagingDirectory }}
             zipAfterPublish: True
 
-        # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
+        # this code takes all the file and uploads them as an artifact of your build.
         - task: PublishBuildArtifacts@1
           inputs:
-            pathtoPublish: ${{ parameters.artifactStagingDirectory }} 
-            artifactName: ckw-blog
+            pathtoPublish: '${{ parameters.artifactStagingDirectory }}' 
+            artifactName: 'ckw-blog'
