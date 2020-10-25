@@ -33,26 +33,26 @@ stages:
         - task: NuGetCommand@2
           displayName: 'Restore solution'
           inputs:
-            restoreSolution: '$(parameters.solution)'
+            restoreSolution: '${{parameters.solution}}'
 
         - task: DotNetCoreCLI@2
           displayName: 'Build Solution'
           inputs:
             command: build
-            projects: '$(parameters.solution)'
-            arguments: '--configuration $(parameters.buildConfiguration)'
+            projects: '${{parameters.solution}}'
+            arguments: '--configuration ${{parameters.buildConfiguration}}'
 
         - task: DotNetCoreCLI@2
           displayName: 'Execute Unit Tests'
           inputs:
             command: test
             projects: '**/*Tests/*.csproj'
-            arguments: '--configuration $(parameters.buildConfiguration)'
+            arguments: '--configuration ${{parameters.buildConfiguration}}'
 
         - task: DotNetCoreCLI@2
           inputs:
             command: publish
-            arguments: '--configuration $(parameters.buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+            arguments: '--configuration ${{parameters.buildConfiguration}} --output $(Build.ArtifactStagingDirectory)'
             zipAfterPublish: True
 
         # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
