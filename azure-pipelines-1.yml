@@ -6,14 +6,10 @@
 trigger:
 - master
 
-variables:
-    solution: '**/*.sln'
-    buildPlatform: 'Any CPU'
-    buildConfiguration: 'Release'
-
 stages:
 - template: templates/stage-build.yml
   parameters:
-    solution: $(solution)
-    buildPlatform: $(buildPlatform)
-    buildConfiguration: $(buildConfiguration)
+    solution: '**/*.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Release'
+    artifactsStagingDirectory: '$(Build.ArtifactStagingDirectory)' 
