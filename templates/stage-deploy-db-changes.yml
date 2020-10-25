@@ -27,7 +27,7 @@ stages:
         targetType: 'inline'
         script: |
           echo Run dotnet ef core
-          dotnet ef database update --project ${{ efcorepath }}
+          dotnet ef database update --project ${{ parameters.efcorepath }}
           
           echo "SET PGPASSWORD environment variable"
           export PGPASSWORD='postgres'
