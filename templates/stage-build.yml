@@ -17,7 +17,7 @@ stages:
         inputs:
           targetType: inline
           script: |
-            echo 'Create Container'
+            echo Create Container
     
     # jobs:
     #   - job: 
