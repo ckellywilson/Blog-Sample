@@ -18,4 +18,4 @@ stages:
     container: 'blog-pg-115'
 - template: templates/stage-deploy-db-changes.yml
   parameters:
-    efcorepath: ../Blog.PostgreSQL.EF/Blog.PostgreSQL.EF.csproj'
+    efcorepath: '../Blog.PostgreSQL.EF/Blog.PostgreSQL.EF.csproj'
