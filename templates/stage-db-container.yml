@@ -9,6 +9,7 @@ stages:
   - job: CreateDockerContainer
     displayName: 'Create Docker Container'
     steps:
+    
     - task: AzureCLI@2
       inputs:
         displayName: 'Create Resource Group'
@@ -16,6 +17,7 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'az group create --name ${{ parameters.resourceGroup }} --location southcentralus'
+
     - task: AzureCLI@2
       displayName: 'Create PostgreSQL Container'
       inputs:
@@ -23,3 +25,15 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'az container create --resource-group ${{ parameters.resourceGroup }} --os-type Linux --name ${{ parameters.container }} --image postgres:11.5 --ports 5432 --ip-address Public --dns-name-label ${{ parameters.container }} --environment-variables="POSTGRES_PASSWORD=postgres"'
+
+    - task: UseDotNet@2
+      displayName: 'Install 3.1 version of .NET Core'
+      inputs:
+        version: '3.1.x'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Install Entity Framework'
+      inputs:
+        command: custom
+        custom: tool
+        arguments: 'install --global dotnet-ef'
