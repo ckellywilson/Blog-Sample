@@ -6,7 +6,6 @@ parameters:
 
 stages:
 - stage: BuildQA
-    displayName: 'Build QA'
     
     # pool:
     #   vmImage: ubuntu-latest
