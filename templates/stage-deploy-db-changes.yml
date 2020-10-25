@@ -1,0 +1,33 @@
+parameters:
+  efcorepath: ''
+
+stages:
+- stage: DeployDBChanges
+  displayName: 'Deploy DB Changes'
+  jobs:
+  - job: DeployDBChanges
+    displayName: 'Deploy DB Changes'
+    steps:
+
+    - task: UseDotNet@2
+      displayName: 'Install 3.1 version of .NET Core'
+      inputs:
+        version: '3.1.x'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Install Entity Framework'
+      inputs:
+        command: custom
+        custom: tool
+        arguments: 'install --global dotnet-ef'
+
+    - task: Bash@3
+      displayName: 'Update database from ef core project'
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo Run dotnet ef core
+          dotnet ef database update --project ${{ efcorepath }}
+          
+          echo "SET PGPASSWORD environment variable"
+          export PGPASSWORD='postgres'

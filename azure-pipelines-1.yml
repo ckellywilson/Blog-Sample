@@ -12,7 +12,10 @@ stages:
     solution: '**/*.sln'
     buildPlatform: 'Any CPU'
     buildConfiguration: 'Release'
-- template: templates/stage-db-container.yml
+- template: templates/stage-create-db-container.yml
   parameters:
     resourceGroup: 'blogrs'
     container: 'blog-pg-115'
+- template: templates/stage-deploy-db-changes.yml
+  parameters:
+    efcorepath: ../Blog.PostgreSQL.EF/Blog.PostgreSQL.EF.csproj'

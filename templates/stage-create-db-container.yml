@@ -11,6 +11,7 @@ stages:
     steps:
     
     - task: AzureCLI@2
+      displayName: 'Create Resource Group'
       inputs:
         displayName: 'Create Resource Group'
         azureSubscription: 'Visual Studio Enterprise Subscription(3d5606e1-6371-4322-b08d-b12fc3b3669f)'
@@ -37,3 +38,5 @@ stages:
         command: custom
         custom: tool
         arguments: 'install --global dotnet-ef'
+
+    - task: Bash@3
