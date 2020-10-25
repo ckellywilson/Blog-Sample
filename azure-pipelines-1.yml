@@ -13,3 +13,6 @@ stages:
     buildPlatform: 'Any CPU'
     buildConfiguration: 'Release'
 - template: templates/stage-db-container.yml
+  parameters:
+    resourceGroup: 'blogrs'
+    container: 'blog-pg-115'

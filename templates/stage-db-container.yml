@@ -1,10 +1,23 @@
+parameters:
+  resourceGroup: ''
+  container: ''
+
 stages:
 - stage: CreateDBContainer
   displayName: 'Create DB Container'
   jobs:
-  - job: ExecuteBashContainerScript
-    displayName: 'Execute Bash Container Script'
+  - job: CreateDockerContainer
+    displayName: 'Create Docker Container'
     steps:
-    - task: Bash@3
+    - task: AzureCLI@2
+      displayName: 'Create Resource Group'
       inputs:
-        filePath: '$(Build.SourcesDirectory)/src/ShellScripts/az-container-pg-blog.sh'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az group create --name ${{ parameters.resourceGroup }} --location southcentralus'
+    - task: AzureCLI@2
+      displayName: 'Create PostgreSQL Container'
+      inputs:
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az container create --resource-group ${{ parameters.resourceGroup }} --os-type Linux --name ${{ parameters.container }} --image postgres:11.5 --ports 5432 --ip-address Public --dns-name-label ${{ parameters.container }} --environment-variables="POSTGRES_PASSWORD=postgres"'
