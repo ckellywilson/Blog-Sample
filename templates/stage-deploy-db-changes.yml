@@ -27,7 +27,10 @@ stages:
         targetType: 'inline'
         script: |
           echo Run dotnet ef core
-          dotnet ef database update --project ${{ parameters.efcorepath }}
+          dotnet ef database update --project '${{ parameters.sourcePath }}/Blog.PostgreSQL.EF/Blog.PostgreSQL.EF.csproj'
           
           echo "SET PGPASSWORD environment variable"
           export PGPASSWORD='postgres'
+
+          echo Populate database with default values
+          psql -h $host -p 5432 -d blog -U postgres -f '${{ parameters.sourcePath }}/Blog.PostgreSQL/blog_entry_insert.sql'
