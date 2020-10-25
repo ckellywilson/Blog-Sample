@@ -14,7 +14,6 @@ stages:
     - job: Build
       steps:
     - task: Bash@3
-        displayName: Azure Container Instance
         inputs:
           targetType: inline
           script: |
