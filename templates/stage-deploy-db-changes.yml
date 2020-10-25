@@ -21,13 +21,13 @@ stages:
         custom: tool
         arguments: 'install --global dotnet-ef'
 
-    - task: Bash@3
-      displayName: 'Update database from ef core project'
-      inputs:
-        targetType: 'inline'
-        script: |
-          echo Run dotnet ef core
-          dotnet ef database update --project ${{ parameters.efcorepath }}
+    # - task: Bash@3
+    #   displayName: 'Update database from ef core project'
+    #   inputs:
+    #     targetType: 'inline'
+    #     script: |
+    #       echo Run dotnet ef core
+    #       dotnet ef database update --project ${{ parameters.efcorepath }}
           
-          echo "SET PGPASSWORD environment variable"
-          export PGPASSWORD='postgres'
+    #       echo "SET PGPASSWORD environment variable"
+    #       export PGPASSWORD='postgres'
