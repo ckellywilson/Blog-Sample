@@ -29,7 +29,7 @@ stages:
       displayName: 'Install NuGet tools'
 
     - task: NuGetCommand@2
-      displayName: 'Restore solution'
+      displayName: 'Restore solution ${{ parameters.solution }}'
       inputs:
         restoreSolution: ${{ parameters.solution }}
 

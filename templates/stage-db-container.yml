@@ -1,0 +1,10 @@
+stages:
+- stage: CreateDBContainer
+  displayName: 'Create DB Container'
+  jobs:
+  - job: ExecuteBashContainerScript
+    displayName: 'Execute Bash Container Script'
+    steps:
+    - task: Bash@3
+      inputs:
+        filePath: '/src/ShellScripts/az-container-pg-blog.sh'
