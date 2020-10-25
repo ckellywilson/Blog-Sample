@@ -6,12 +6,18 @@ parameters:
 
 stages:
 - stage: BuildQA
-    
-    pool:
-      vmImage: ubuntu-latest
-
-    jobs:
-    - job: Build
+  pool:
+      vmImage: 'ubuntu-latest'
+  jobs:
+  - job:
+    displayName: 'Create PG Container'
+    steps:
+    - task: Bash@3
+      displayName: 'Azure Container Instance'
+      inputs:
+        targetType: inline
+        script: |
+          echo 'Create Container'
     
     # jobs:
     #   - job: 
