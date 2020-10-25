@@ -19,3 +19,4 @@ stages:
 - template: templates/stage-deploy-db-changes.yml
   parameters:
     sourcePath: '$(Build.Repository.LocalPath)/src/'
+    containerHost: 'blog-pg-115.southcentralus.azurecontainer.io'

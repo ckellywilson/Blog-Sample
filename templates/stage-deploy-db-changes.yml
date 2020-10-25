@@ -1,5 +1,6 @@
 parameters:
   efcorepath: ''
+  containerHost: ''
 
 stages:
 - stage: DeployDBChanges
@@ -33,4 +34,4 @@ stages:
           export PGPASSWORD='postgres'
 
           echo Populate database with default values
-          psql -h $host -p 5432 -d blog -U postgres -f '${{ parameters.sourcePath }}/Blog.PostgreSQL/blog_entry_insert.sql'
+          psql -h ${{ parameters.containerHost }} -p 5432 -d blog -U postgres -f '${{ parameters.sourcePath }}/Blog.PostgreSQL/blog_entry_insert.sql'
