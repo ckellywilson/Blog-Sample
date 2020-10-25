@@ -12,4 +12,3 @@ stages:
     solution: '**/*.sln'
     buildPlatform: 'Any CPU'
     buildConfiguration: 'Release'
-    artifactsStagingDirectory: '$(Build.ArtifactStagingDirectory)' 
