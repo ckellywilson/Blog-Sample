@@ -18,8 +18,17 @@ stages:
     - task: AzureCLI@2
       displayName: 'Create App Service'
       inputs:
-        displayName: 'Create Resource Group'
+        displayName: 'Create App Service'
         azureSubscription: ${{ parameters.azureSubscription }}
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'az appservice plan create --resource-group ${{ parameters.resourceGroup }} --name ${{ parameters.appServiceName }} --location ${{ parameters.location }} --sku ${{ parameters.sku }} --is-linux'
+
+    - task: AzureCLI@2
+      displayName: 'Create Web App'
+      inputs:
+        displayName: 'Create Web App'
+        azureSubscription: ${{ parameters.azureSubscription }}
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az webapp create --resource-group ${{ parameters.resourceGroup }} --plan ${{ parameters.appServiceName }} --name ${{ parameters.webAppName }} --runtime "{{ parameters.dotNetCoreRuntime }}"'
