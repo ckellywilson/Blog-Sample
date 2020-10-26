@@ -27,9 +27,9 @@ stages:
     - task: AzureRmWebAppDeployment@4
       displayName: 'Deploy Web App'
       inputs:
-      ConnectionType: 'AzureRM'
-      azureSubscription: ${{ parameters.azureSubscription }}
-      appType: 'webAppLinux'
-      WebAppName: ${{ parameters.appServiceName }}
-      packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-      RuntimeStack: ${{ parameters.dotNetCoreRuntime }}
+        ConnectionType: 'AzureRM'
+        azureSubscription: ${{ parameters.azureSubscription }}
+        appType: 'webAppLinux'
+        WebAppName: ${{ parameters.appServiceName }}
+        packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+        RuntimeStack: ${{ parameters.dotNetCoreRuntime }}
