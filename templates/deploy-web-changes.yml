@@ -69,13 +69,11 @@ stages:
   - job:
     displayName: 'Deploy Web App'
     steps:
-    - task: AzureRmWebAppDeployment@4
+    - task: AzureWebApp@1
       displayName: 'Deploy Web App'
       inputs:
-        ConnectionType: 'AzureRM'
         azureSubscription: ${{ parameters.azureSubscription }}
-        appType: 'webAppLinux'
-        WebAppName: ${{ parameters.appServiceName }}
-        packageForLinux: '${{ parameters.artifactsDirectory }}/**/*.zip'
-        RuntimeStack: ${{ parameters.dotNetCoreRuntime }}    
+        appType: webAppLinux
+        appName: ${{ parameters.appServiceName }}
+        package: ${{ parameters.artifactsDirectory }}/**/*.zip
     
