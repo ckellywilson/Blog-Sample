@@ -4,6 +4,7 @@ parameters:
   buildConfiguration: ''
   artifactsDirectory: ''
   azureSubscription: ''
+  appServiceName: ''
 
 stages:
 - stage: DeployWebChanges
@@ -11,7 +12,7 @@ stages:
   pool:
       vmImage: 'ubuntu-latest'
   jobs:
-  - job: 
+  - job: Build
     displayName: 'Build'
     steps:
     - task: UseDotNet@2
@@ -48,8 +49,9 @@ stages:
         projects: '**/*Tests/*.csproj'
         arguments: '--configuration ${{ parameters.buildConfiguration }}'
 
-  - job:
+  - job: PublishArtifacts
     displayName: 'Publish Artifacts'
+    dependsOn: Build
     steps:
     - task: DotNetCoreCLI@2
       displayName: 'Publish local artifacts'
@@ -65,8 +67,9 @@ stages:
         ArtifactName: 'drop'
         publishLocation: 'Container'
 
-  - job:
+  - job: DeployWebApp
     displayName: 'Deploy Web App'
+    dependsOn: PublishArtifacts
     steps:
     - task: AzureWebApp@1
       displayName: 'Deploy Web App'
