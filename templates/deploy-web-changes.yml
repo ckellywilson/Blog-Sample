@@ -7,14 +7,13 @@ parameters:
   dotNetCoreRuntime: ''
 
 stages:
-- stage: BuildQA
-  displayName: 'Build QA'
+- stage: DeployWebChanges
+  displayName: 'Deploy Web Changes'
   pool:
       vmImage: 'ubuntu-latest'
   jobs:
   - job: 
     displayName: 'Build'
-
     steps:
     - task: UseDotNet@2
       displayName: 'Install 3.1 version of .NET Core'
@@ -42,7 +41,7 @@ stages:
         command: build
         projects: '${{ parameters.solution }}'
         arguments: '--configuration ${{ parameters.buildConfiguration }}'
-
+  
     - task: DotNetCoreCLI@2
       displayName: 'Execute Unit Tests'
       inputs:
@@ -50,6 +49,9 @@ stages:
         projects: '**/*Tests/*.csproj'
         arguments: '--configuration ${{ parameters.buildConfiguration }}'
 
+  - job:
+    displayName: 'Publish Artifacts'
+    steps:
     - task: DotNetCoreCLI@2
       displayName: 'Publish local artifacts'
       inputs:
@@ -64,6 +66,9 @@ stages:
         ArtifactName: 'drop'
         publishLocation: 'Container'
 
+  - job:
+    displayName: 'Deploy Web App'
+    steps:
     - task: AzureRmWebAppDeployment@4
       displayName: 'Deploy Web App'
       inputs:
