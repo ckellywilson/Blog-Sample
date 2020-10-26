@@ -1,28 +1,68 @@
 parameters:
-  azureSubscription: ''
-  resourceGroup: ''
-  location: ''
-  appServiceName: ''
-  sku: ''
+  solution: ''
+  buildPlatform: ''
+  buildConfiguration: ''
+  artifactsDirectory: ''
   webAppName: ''
   dotNetCoreRuntime: ''
 
 stages:
-- stage: DeployWebChanges
-  displayName: 'Deploy Web Changes'
+- stage: BuildQA
+  displayName: 'Build QA'
+  pool:
+      vmImage: 'ubuntu-latest'
   jobs:
-  - job: DeployWebChanges
-    displayName: 'Deploy Web Changes'
-    steps:
+  - job: 
+    displayName: 'Build'
 
-    - task: AzureCLI@2
-      displayName: 'Create App Service'
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Install 3.1 version of .NET Core'
       inputs:
-        displayName: 'Create App Service'
-        azureSubscription: ${{ parameters.azureSubscription }}
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: 'az appservice plan create --resource-group ${{ parameters.resourceGroup }} --name ${{ parameters.appServiceName }} --location ${{ parameters.location }} --sku ${{ parameters.sku }} --is-linux'
+        version: '3.1.x'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Install Entity Framework'
+      inputs:
+        command: custom
+        custom: tool
+        arguments: 'install --global dotnet-ef'
+
+    - task: NuGetToolInstaller@1
+      displayName: 'Install NuGet tools'
+
+    - task: NuGetCommand@2
+      displayName: 'Restore solution ${{ parameters.solution }}'
+      inputs:
+        restoreSolution: ${{ parameters.solution }}
+
+    - task: DotNetCoreCLI@2
+      displayName: Build Solution
+      inputs:
+        command: build
+        projects: '${{ parameters.solution }}'
+        arguments: '--configuration ${{ parameters.buildConfiguration }}'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Execute Unit Tests'
+      inputs:
+        command: test
+        projects: '**/*Tests/*.csproj'
+        arguments: '--configuration ${{ parameters.buildConfiguration }}'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish local artifacts'
+      inputs:
+        command: publish
+        arguments: '--configuration ${{ parameters.buildConfiguration }} --output ${{ parameters.artifactsDirectory }}'
+        zipAfterPublish: True
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish artifacts'
+      inputs:
+        PathtoPublish: '${{ parameters.artifactsDirectory }}'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
 
     - task: AzureRmWebAppDeployment@4
       displayName: 'Deploy Web App'
@@ -31,5 +71,6 @@ stages:
         azureSubscription: ${{ parameters.azureSubscription }}
         appType: 'webAppLinux'
         WebAppName: ${{ parameters.appServiceName }}
-        packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-        RuntimeStack: ${{ parameters.dotNetCoreRuntime }}
+        packageForLinux: '${{ parameters.artifactsDirectory }}/**/*.zip'
+        RuntimeStack: ${{ parameters.dotNetCoreRuntime }}    
+    

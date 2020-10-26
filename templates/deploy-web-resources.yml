@@ -1,0 +1,23 @@
+parameters:
+  azureSubscription: ''
+  resourceGroup: ''
+  location: ''
+  appServiceName: ''
+  sku: ''
+
+stages:
+- stage: DeployWebChanges
+  displayName: 'Deploy Web Changes'
+  jobs:
+  - job: DeployWebChanges
+    displayName: 'Deploy Web Changes'
+    steps:
+
+    - task: AzureCLI@2
+      displayName: 'Create App Service'
+      inputs:
+        displayName: 'Create App Service'
+        azureSubscription: ${{ parameters.azureSubscription }}
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az appservice plan create --resource-group ${{ parameters.resourceGroup }} --name ${{ parameters.appServiceName }} --location ${{ parameters.location }} --sku ${{ parameters.sku }} --is-linux'

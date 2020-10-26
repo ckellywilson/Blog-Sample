@@ -5,8 +5,8 @@ parameters:
   container: ''
 
 stages:
-- stage: CreateDBContainer
-  displayName: 'Create DB Container'
+- stage: DeployDBResources
+  displayName: 'Deploy DB Resources'
   jobs:
   - job: CreateDockerContainer
     displayName: 'Create Docker Container'
