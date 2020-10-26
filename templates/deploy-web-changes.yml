@@ -22,4 +22,4 @@ stages:
         azureSubscription: ${{ parameters.azureSubscription }}
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'az appservice plan create --resource-group ${{ resourceGroup }} --name ${{ appServiceName }} --location ${{ location }} --sku ${{ sku }} --is-linux'
+        inlineScript: 'az appservice plan create --resource-group ${{ parameters.resourceGroup }} --name ${{ parameters.appServiceName }} --location ${{ parameters.location }} --sku ${{ parameters.sku }} --is-linux'
