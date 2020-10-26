@@ -77,5 +77,4 @@ stages:
         azureSubscription: ${{ parameters.azureSubscription }}
         appType: webAppLinux
         appName: ${{ parameters.webAppName }}
-        package: ${{ parameters.artifactsDirectory }}/**/*.zip
     
