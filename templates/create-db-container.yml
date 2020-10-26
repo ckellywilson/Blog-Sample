@@ -1,5 +1,7 @@
 parameters:
+  azureSubscription: ''
   resourceGroup: ''
+  location: ''
   container: ''
 
 stages:
@@ -14,15 +16,15 @@ stages:
       displayName: 'Create Resource Group'
       inputs:
         displayName: 'Create Resource Group'
-        azureSubscription: 'Visual Studio Enterprise Subscription(3d5606e1-6371-4322-b08d-b12fc3b3669f)'
+        azureSubscription: ${{ parameters.azureSubscription }}
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'az group create --name ${{ parameters.resourceGroup }} --location southcentralus'
+        inlineScript: 'az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }}'
 
     - task: AzureCLI@2
       displayName: 'Create PostgreSQL Container'
       inputs:
-        azureSubscription: 'Visual Studio Enterprise Subscription(3d5606e1-6371-4322-b08d-b12fc3b3669f)'
+        azureSubscription: ${{ parameters.azureSubscription }}
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'az container create --resource-group ${{ parameters.resourceGroup }} --os-type Linux --name ${{ parameters.container }} --image postgres:11.5 --ports 5432 --ip-address Public --dns-name-label ${{ parameters.container }} --environment-variables="POSTGRES_PASSWORD=postgres"'

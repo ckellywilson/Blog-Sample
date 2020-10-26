@@ -7,16 +7,27 @@ trigger:
 - master
 
 stages:
-- template: templates/stage-build.yml
+- template: templates/build.yml
   parameters:
     solution: '**/*.sln'
     buildPlatform: 'Any CPU'
     buildConfiguration: 'Release'
-- template: templates/stage-create-db-container.yml
+- template: templates/create-db-container.yml
   parameters:
+    azureSubscription: 'Visual Studio Enterprise Subscription(3d5606e1-6371-4322-b08d-b12fc3b3669f)'
     resourceGroup: 'blogrs'
+    location: 'southcentralus'
     container: 'blog-pg-115'
-- template: templates/stage-deploy-db-changes.yml
+- template: templates/deploy-db-changes.yml
   parameters:
     sourcePath: '$(Build.Repository.LocalPath)/src/'
     containerHost: 'blog-pg-115.southcentralus.azurecontainer.io'
+- template: templates/deploy-web-changes.yml
+  parameters:
+    azureSubscription: 'Visual Studio Enterprise Subscription(3d5606e1-6371-4322-b08d-b12fc3b3669f)'
+    resourceGroup: 'blogrs'
+    location: 'southcentralus'
+    appServiceName: 'blogappsvc'
+    sku: 'FREE'
+    webAppName: 'blogwebapi'
+    dotNetCoreRuntime: 'DOTNETCORE|3.1'
