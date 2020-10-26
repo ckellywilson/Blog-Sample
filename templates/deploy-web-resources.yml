@@ -6,11 +6,11 @@ parameters:
   sku: ''
 
 stages:
-- stage: DeployWebChanges
-  displayName: 'Deploy Web Changes'
+- stage: DeployWebResources
+  displayName: 'Deploy Web Resources'
   jobs:
-  - job: DeployWebChanges
-    displayName: 'Deploy Web Changes'
+  - job: DeployWebResources
+    displayName: 'Deploy Web Resources'
     steps:
 
     - task: AzureCLI@2
