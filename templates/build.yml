@@ -2,6 +2,7 @@ parameters:
   solution: ''
   buildPlatform: ''
   buildConfiguration: ''
+  artifactsDirectory: ''
 
 stages:
 - stage: BuildQA
@@ -47,9 +48,15 @@ stages:
         projects: '**/*Tests/*.csproj'
         arguments: '--configuration ${{ parameters.buildConfiguration }}'
 
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: publish
+        arguments: '--configuration ${{ parameters.buildConfiguration }} --output ${{ parameters.artifactsDirectory }}'
+        zipAfterPublish: True
+
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        PathtoPublish: '${{ parameters.artifactsDirectory }}'
         ArtifactName: 'drop'
         publishLocation: 'Container' 
     
