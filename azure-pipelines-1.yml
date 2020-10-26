@@ -27,7 +27,7 @@ stages:
     azureSubscription: 'Visual Studio Enterprise Subscription(3d5606e1-6371-4322-b08d-b12fc3b3669f)'
     resourceGroup: 'blog-092899-rs'
     location: 'southcentralus'
-    appServiceName: 'blogappsvc'
+    appServiceName: 'blog-092899-appsvc'
     sku: 'B1'
     webAppName: 'blog-092899-webapi'
     dotNetCoreRuntime: 'DOTNETCORE|3.1'
