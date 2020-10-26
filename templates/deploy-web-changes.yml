@@ -76,6 +76,7 @@ stages:
         buildType: 'current'
         downloadType: 'single'
         downloadPath: '$(System.ArtifactsDirectory)'
+        artifactName: 'drop'
     - task: AzureWebApp@1
       inputs:
         azureSubscription: ${{ parameters.azureSubscription }}
