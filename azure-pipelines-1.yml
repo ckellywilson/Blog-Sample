@@ -15,7 +15,7 @@ stages:
 - template: templates/create-db-container.yml
   parameters:
     azureSubscription: 'Visual Studio Enterprise Subscription(3d5606e1-6371-4322-b08d-b12fc3b3669f)'
-    resourceGroup: 'blogrs'
+    resourceGroup: 'blog-092899-rs'
     location: 'southcentralus'
     container: 'blog-pg-115'
 - template: templates/deploy-db-changes.yml
@@ -25,9 +25,9 @@ stages:
 - template: templates/deploy-web-changes.yml
   parameters:
     azureSubscription: 'Visual Studio Enterprise Subscription(3d5606e1-6371-4322-b08d-b12fc3b3669f)'
-    resourceGroup: 'blogrs'
+    resourceGroup: 'blog-092899-rs'
     location: 'southcentralus'
     appServiceName: 'blogappsvc'
     sku: 'B1'
-    webAppName: 'blogwebapi'
+    webAppName: 'blog-092899-webapi'
     dotNetCoreRuntime: 'DOTNETCORE|3.1'
