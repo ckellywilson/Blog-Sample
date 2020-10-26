@@ -28,6 +28,6 @@ stages:
     resourceGroup: 'blogrs'
     location: 'southcentralus'
     appServiceName: 'blogappsvc'
-    sku: 'FREE'
+    sku: 'B1'
     webAppName: 'blogwebapi'
     dotNetCoreRuntime: 'DOTNETCORE|3.1'
