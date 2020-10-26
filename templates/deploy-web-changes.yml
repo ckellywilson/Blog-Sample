@@ -4,7 +4,7 @@ parameters:
   buildConfiguration: ''
   artifactsDirectory: ''
   azureSubscription: ''
-  appServiceName: ''
+  webAppName: ''
 
 stages:
 - stage: DeployWebChanges
@@ -76,6 +76,6 @@ stages:
       inputs:
         azureSubscription: ${{ parameters.azureSubscription }}
         appType: webAppLinux
-        appName: ${{ parameters.appServiceName }}
+        appName: ${{ parameters.webAppName }}
         package: ${{ parameters.artifactsDirectory }}/**/*.zip
     

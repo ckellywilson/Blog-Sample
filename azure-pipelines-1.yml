@@ -27,6 +27,8 @@ stages:
     location: 'southcentralus'
     appServiceName: 'blog-092899-appsvc'
     sku: 'B1'
+    webAppName: 'blog-092899-webapp'
+    runtime: 'DOTNETCORE|3.1'
 
 - template: templates/deploy-web-changes.yml
   parameters:
@@ -35,4 +37,4 @@ stages:
     buildConfiguration: 'Release'
     artifactsDirectory: '$(Build.ArtifactsStagingDirectory)'
     azureSubscription: 'Visual Studio Enterprise Subscription(3d5606e1-6371-4322-b08d-b12fc3b3669f)'
-    appServiceName: 'blog-092899-appsvc'
+    webAppName: 'blog-092899-webapp'
