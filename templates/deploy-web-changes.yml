@@ -71,6 +71,13 @@ stages:
     displayName: 'Deploy Web App'
     dependsOn: PublishArtifacts
     steps:
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Artifacts'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'drop'
+        downloadPath: '$(System.ArtifactsDirectory)'
     - task: AzureWebApp@1
       displayName: 'Deploy Web App'
       inputs:
