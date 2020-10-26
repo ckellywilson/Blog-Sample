@@ -31,4 +31,4 @@ stages:
         azureSubscription: ${{ parameters.azureSubscription }}
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'az webapp create --resource-group ${{ parameters.resourceGroup }} --plan ${{ parameters.appServiceName }} --name ${{ parameters.webAppName }} --runtime "{{ parameters.dotNetCoreRuntime }}"'
+        inlineScript: 'az webapp create --resource-group ${{ parameters.resourceGroup }} --plan ${{ parameters.appServiceName }} --name ${{ parameters.webAppName }} --runtime {{ parameters.dotNetCoreRuntime }}'
