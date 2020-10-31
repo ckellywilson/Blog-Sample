@@ -34,6 +34,7 @@ namespace Blog.Web.Controllers
         public async Task<ActionResult<BlogEntry>> Get(int id)
         {
             var result = await _repository.GetAsync(id, t => t.BlogPosts);
+            System.Diagnostics.Trace.Write($"Blog.Web.Controllers.Get called for BlogId: {id}");
 
             if (result == null)
                 return NoContent();
