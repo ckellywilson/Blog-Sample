@@ -16,7 +16,7 @@ variables:
 
 steps:
 - task: UseDotNet@2
-  displayName: 'Install 5.x version of .NET Core'
+  displayName: 'Install 5.x version of .NET'
   inputs:
     version: '5.x'
 
