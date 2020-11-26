@@ -53,6 +53,11 @@ stages:
     displayName: 'Publish Artifacts'
     dependsOn: Build
     steps:
+    - task: UseDotNet@2
+      displayName: 'Install 5.x version of .NET'
+      inputs:
+        version: '5.x'
+        
     - task: DotNetCoreCLI@2
       displayName: 'Publish local artifacts'
       inputs:
