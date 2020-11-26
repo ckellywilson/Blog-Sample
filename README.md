@@ -36,3 +36,7 @@ _Test Api_
 * Debug the _Blog.Web_ project and enter the following Url in the browser 
   * Enter _http://localhost:5000/api/blog_ to see the list of _blog_entry_ values
   * Enter _http://localhost:5000/api/blog/1_ to see the _blog_entry_ value of 1.
+
+# Updates
+_2020-11-26_
+* Change project references from `netcoreapp3.1` to `net5.0`, as per [Migrate from ASP.NET Core 3.1 to 5.0](https://docs.microsoft.com/en-us/aspnet/core/migration/31-to-50?view=aspnetcore-5.0&tabs=visual-studio)
