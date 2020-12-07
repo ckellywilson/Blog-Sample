@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.ApplicationInsights;
 
 namespace Blog.Web
 {
@@ -30,6 +31,9 @@ namespace Blog.Web
             services.AddDbContext<BlogContext>(opt => opt.UseNpgsql(_connectionString));
             services.AddTransient<ISelectRepository<BlogEntry>, BlogEntryRepository>();
             services.AddControllers();
+
+            // The following line enables Application Insights telemetry collection.
+            services.AddApplicationInsightsTelemetry();
 
             services.AddMvc()
                 .AddNewtonsoftJson(
