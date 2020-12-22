@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Web.Controllers
@@ -7,10 +8,17 @@ namespace Blog.Web.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly TelemetryClient telemetryClient;
+
+        public ValuesController(TelemetryClient telemetryClient)
+        {
+            this.telemetryClient = telemetryClient;
+        }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            telemetryClient.TrackEvent("ValuesController.Get() called");
             return new[] { "value1", "value2", "value3" };
         }
 
