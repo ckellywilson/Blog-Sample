@@ -14,29 +14,60 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "publish",
-                "${workspaceFolder}/src/Blog.Web/Blog.Web.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+            "type": "docker-build",
+            "label": "docker-build: debug",
+            "dependsOn": [
+                "build"
             ],
-            "problemMatcher": "$msCompile"
+            "dockerBuild": {
+                "tag": "blogsample:dev",
+                "target": "base",
+                "dockerfile": "${workspaceFolder}/src/Blog.Web/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/Blog.Web/Blog.Web.csproj"
+            }
         },
         {
-            "label": "watch",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "watch",
-                "run",
-                "${workspaceFolder}/src/Blog.Web/Blog.Web.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+            "type": "docker-build",
+            "label": "docker-build: release",
+            "dependsOn": [
+                "build"
             ],
-            "problemMatcher": "$msCompile"
+            "dockerBuild": {
+                "tag": "blogsample:latest",
+                "dockerfile": "${workspaceFolder}/src/Blog.Web/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/Blog.Web/Blog.Web.csproj"
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: debug",
+            "dependsOn": [
+                "docker-build: debug"
+            ],
+            "dockerRun": {},
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/Blog.Web/Blog.Web.csproj",
+                "enableDebugging": true
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: release",
+            "dependsOn": [
+                "docker-build: release"
+            ],
+            "dockerRun": {},
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/Blog.Web/Blog.Web.csproj"
+            }
         }
     ]
 }
