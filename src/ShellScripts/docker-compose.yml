@@ -2,9 +2,9 @@ version: "3.7"
 services:
   db:
     container_name: "pg-115-5433"
-    image: postgres:11.5
+    image: latest
     restart: always
     environment:
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5433:5432"
+      - "5432:5432"

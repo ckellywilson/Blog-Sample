@@ -15,20 +15,20 @@ namespace Blog.Tests
     /// <summary>
     /// Tests configured as per documentation https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/testing?view=aspnetcore-5.x#test-actionresultt
     /// </summary>
-    public class BlogWebTests
+    public class BlogEntryControllerTests
     {
         [Fact]
-        public async Task Blog_controller_get_blog_returns_ok_result()
+        public async Task BlogEntryController_get_blog_entries_returns_ok_result()
         {
             //ARRANGE 1
             var Id = 1;
             var mockSelectRepository = new Mock<ISelectRepository<BlogEntry>>();
             mockSelectRepository.Setup(t => t.GetAsync(Id, t => t.BlogPosts)).ReturnsAsync(PopulateBlogEntries().FirstOrDefault(t => t.Id == Id));
-            BlogController blogController = new BlogController(mockSelectRepository.Object);
+            BlogEntryController BlogEntryController = new BlogEntryController(mockSelectRepository.Object);
 
 
             //ACT
-            var result = await blogController.Get(Id);
+            var result = await BlogEntryController.Get(Id);
 
             //ASSERT
             var actionResult = Assert.IsType<ActionResult<BlogEntry>>(result);
@@ -38,17 +38,17 @@ namespace Blog.Tests
         }
 
         [Fact]
-        public async Task Blog_controller_get_blog_returns_nocontent_result()
+        public async Task BlogEntryController_get_blog_returns_nocontent_result()
         {
             //ARRANGE
             var Id = -99;
             var mockSelectRepository = new Mock<ISelectRepository<BlogEntry>>();
             mockSelectRepository.Setup(t => t.GetAsync(Id, t => t.BlogPosts)).ReturnsAsync(PopulateBlogEntries().FirstOrDefault(t => t.Id == Id));
-            BlogController blogController = new BlogController(mockSelectRepository.Object);
+            BlogEntryController BlogEntryController = new BlogEntryController(mockSelectRepository.Object);
 
 
             //ACT
-            var result = await blogController.Get(Id);
+            var result = await BlogEntryController.Get(Id);
 
             //ASSERT
             var actionResult = Assert.IsType<ActionResult<BlogEntry>>(result);

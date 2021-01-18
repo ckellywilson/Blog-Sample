@@ -10,11 +10,11 @@ namespace Blog.Web.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogController : ControllerBase
+    public class BlogEntryController : ControllerBase
     {
         private readonly ISelectRepository<BlogEntry> _repository;
 
-        public BlogController(ISelectRepository<BlogEntry> repository)
+        public BlogEntryController(ISelectRepository<BlogEntry> repository)
         {
             _repository = repository;
         }
