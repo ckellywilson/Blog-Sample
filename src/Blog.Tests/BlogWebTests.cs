@@ -20,7 +20,7 @@ namespace Blog.Tests
         [Fact]
         public async Task Blog_controller_get_blog_returns_ok_result()
         {
-            //ARRANGE
+            //ARRANGE 1
             var Id = 1;
             var mockSelectRepository = new Mock<ISelectRepository<BlogEntry>>();
             mockSelectRepository.Setup(t => t.GetAsync(Id, t => t.BlogPosts)).ReturnsAsync(PopulateBlogEntries().FirstOrDefault(t => t.Id == Id));
