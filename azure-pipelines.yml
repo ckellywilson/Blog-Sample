@@ -42,11 +42,11 @@ stages:
         command: 'publish'
         publishWebProjects: false
         projects: '$(System.DefaultWorkingDirectory)/**/Blog.Web.csproj'
-        arguments: '--no-restore --no-build --configuration $(buildConfiguration)'
+        arguments: '--no-restore --no-build --configuration $(buildConfiguration) --output $(Build.ArtifactsStagingDirectory)/$(buildConfiguration)'
         modifyOutputPath: false
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        PathtoPublish: '$(Build.ArtifactsStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
 
