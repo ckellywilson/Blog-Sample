@@ -12,14 +12,43 @@ variables:
   dotnetVersion: '5.x'
 
 stages:
-- stage: DeployWebResources
-  displayName: 'Deploy Web Resources'
+- stage: Build
+  displayName: 'Build Web Resources'
+  jobs:
+  - job: BuildWebAPI
+    displayName: 'Build Web API'
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Install $(dotnetVersion)'
+      inputs:
+        packageType: 'sdk'
+        version: '$(dotnetVersion)'
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore all projects'
+      inputs:
+        command: 'restore'
+        projects: '**/*.csproj'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '$(System.DefaultWorkingDirectory)/**/Blog.web.csproj'
+        arguments: '--no-build --configuration $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: false
+        projects: '$(System.DefaultWorkingDirectory)/**/Blog.Web.csproj'
+        arguments: '--no-build --configuration $(buildConfiguration)'
+        modifyOutputPath: false
+    
 
-- stage: BuildWebAPI
-  displayName: 'Build Web API'
+# - stage: BuildWebAPI
+#   displayName: 'Build Web API'
   
-- stage: Test
-  displayName: 'Run Tests'
+# - stage: Test
+#   displayName: 'Run Tests'
 
   # jobs:
 
