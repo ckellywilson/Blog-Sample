@@ -24,26 +24,26 @@ stages:
       displayName: 'Install .net5'
       inputs:
         version: '5.0.x'
-    - task: DotNetCoreCLI@2
-      displayName: 'Restore project dependencies'
-      inputs:
-        command: 'restore'
-        projects: '**/*.csproj'
-    - task: DotNetCoreCLI@2
-      displayName: 'Build Web API Project'
-      inputs:
-        command: 'build'
-        arguments: '--no-response --configuration $(buildConfiguration)'
-        projects: '$(System.DefaultWorkingDirectory)/**/Blog.Web.csproj'
-    - task: DotNetCoreCLI@2
-      displayName: 'Publish Project - $(buildConfiguration)'
-      inputs:
-        command: 'publish'
-        projects: 'webProject'
-        publishWebProjects: false
-        arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
-        zipAfterPublish: true
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish artifact: drop'
-      condition: succeeded()
+    # - task: DotNetCoreCLI@2
+    #   displayName: 'Restore project dependencies'
+    #   inputs:
+    #     command: 'restore'
+    #     projects: '**/*.csproj'
+    # - task: DotNetCoreCLI@2
+    #   displayName: 'Build Web API Project'
+    #   inputs:
+    #     command: 'build'
+    #     arguments: '--no-response --configuration $(buildConfiguration)'
+    #     projects: '$(System.DefaultWorkingDirectory)/**/Blog.Web.csproj'
+    # - task: DotNetCoreCLI@2
+    #   displayName: 'Publish Project - $(buildConfiguration)'
+    #   inputs:
+    #     command: 'publish'
+    #     projects: 'webProject'
+    #     publishWebProjects: false
+    #     arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+    #     zipAfterPublish: true
+    # - task: PublishBuildArtifacts@1
+    #   displayName: 'Publish artifact: drop'
+    #   condition: succeeded()
 
