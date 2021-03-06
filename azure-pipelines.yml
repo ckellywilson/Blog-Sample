@@ -31,11 +31,13 @@ stages:
         command: 'restore'
         projects: '**/*.csproj'
     - task: DotNetCoreCLI@2
+      displayName: 'Build Web API'
       inputs:
         command: 'build'
-        projects: '$(System.DefaultWorkingDirectory)/**/Blog.web.csproj'
+        projects: '$(System.DefaultWorkingDirectory)/**/Blog.Web.csproj'
         arguments: '--no-build --configuration $(buildConfiguration)'
     - task: DotNetCoreCLI@2
+      displayName: 'Publish artifact'
       inputs:
         command: 'publish'
         publishWebProjects: false
