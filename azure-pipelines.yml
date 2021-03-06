@@ -11,12 +11,11 @@ variables:
   buildPlatform: 'Any CPU'
 
 stages:
-- stage: 'CreateWebArtifact'
+- stage: CreateWebArtifact
   displayName: 'Create Web Artifact'
-  pool: 'ubuntu-latest'
-
+  pool: 
+    vmImage: 'ubuntu-latest'
   jobs:
-  
   - job: BuildWebApi
     displayName: 'Build Web API Code'
 
