@@ -3,38 +3,45 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-trigger:
+trigger
 - master
 
+variables:
+  buildConfiguration: 'Release'
+  buildPlatform: 'Any CPU'
+  webProject: '**/Blog.Web/Blog.Web.csproj'
+
 stages:
+- stage: CreateWebArtifact
+  displayName: 'Create Web Artifact'
+  pool: 'ubuntu-latest'
 
-- template: templates/deploy-db-resources.yml
-  parameters:
-    azureSubscription: 'blog-sample-service-connection'
-    resourceGroup: 'blog-092899-rs'
-    location: 'southcentralus'
-    container: 'blog-pg-115'
+  jobs:
+  - job: BuildWebApi
+    displayName: 'Build Web API Code'    
+    - task: @UseDotNet@2
+      displayName: 'Install .net5'
+      inputs:
+        version: '5.0.x'
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore project dependencies'
+      inputs:
+        command: 'restore'
+        projects: '**/*.csproj'
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Web API Project'
+      inputs:
+        command: 'build'
+        arguments: '--no-response --configuration $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish Project - $(buildConfiguration)'
+      inputs:
+        command: 'publish'
+        projects: 'webProject'
+        publishWebProjects: false
+        arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+        zipAfterPublish: true
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish artifact: drop'
+      condition: succeeded()
 
-- template: templates/deploy-db-changes.yml
-  parameters:
-    sourcePath: '$(Build.Repository.LocalPath)/src/'
-    containerHost: 'blog-pg-115.southcentralus.azurecontainer.io'
-
-- template: templates/deploy-web-resources.yml
-  parameters:
-    azureSubscription: 'blog-sample-service-connection'
-    resourceGroup: 'blog-092899-rs'
-    location: 'southcentralus'
-    appServiceName: 'blog-092899-appsvc'
-    sku: 'B1'
-    webAppName: 'blog-092899-webapp'
-    runtime: 'DOTNET|5.0'
-
-- template: templates/deploy-web-changes.yml
-  parameters:
-    solution: '**/*.sln'
-    buildPlatform: 'Any CPU'
-    buildConfiguration: 'Release'
-    artifactsDirectory: '$(Build.ArtifactsStagingDirectory)'
-    azureSubscription: 'blog-sample-service-connection'
-    webAppName: 'blog-092899-webapp'
