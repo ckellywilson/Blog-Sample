@@ -3,16 +3,15 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-trigger
+trigger:
 - master
 
 variables:
   buildConfiguration: 'Release'
   buildPlatform: 'Any CPU'
-  webProject: '**/Blog.Web/Blog.Web.csproj'
 
 stages:
-- stage: CreateWebArtifact
+- stage: 'CreateWebArtifact'
   displayName: 'Create Web Artifact'
   pool: 'ubuntu-latest'
 
@@ -33,6 +32,7 @@ stages:
       inputs:
         command: 'build'
         arguments: '--no-response --configuration $(buildConfiguration)'
+        projects: '$(System.DefaultWorkingDirectory)/**/Blog.Web.csproj'
     - task: DotNetCoreCLI@2
       displayName: 'Publish Project - $(buildConfiguration)'
       inputs:
