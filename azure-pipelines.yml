@@ -12,10 +12,14 @@ variables:
   dotnetVersion: '5.x'
 
 stages:
-- stage: CreateWebArtifact
-  displayName: 'Create Web Artifact'
-  pool:
-    vmImage: ubuntu-latest
+- stage: DeployWebResources
+  displayName: 'Deploy Web Resources'
+
+- stage: BuildWebAPI
+  displayName: 'Build Web API'
+  
+- stage: Test
+  displayName: 'Run Tests'
 
   # jobs:
 
