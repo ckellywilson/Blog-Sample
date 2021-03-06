@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_blog_092899_webapp_name": {
+            "value": null
+        },
+        "serverfarms_blog_092899_appsvc_name": {
+            "value": null
+        },
+        "containerGroups_blog_pg_115_name": {
+            "value": null
+        }
+    }
+}
