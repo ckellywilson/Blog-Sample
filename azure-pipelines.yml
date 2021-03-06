@@ -29,7 +29,7 @@ stages:
       displayName: 'Restore all projects'
       inputs:
         command: 'restore'
-        projects: '**/*.csproj'
+        projects: '**/*.sln'
     - task: DotNetCoreCLI@2
       displayName: 'Build Web API'
       inputs:
@@ -37,14 +37,18 @@ stages:
         projects: '$(System.DefaultWorkingDirectory)/**/Blog.Web.csproj'
         arguments: '--no-restore --configuration $(buildConfiguration)'
     - task: DotNetCoreCLI@2
-      displayName: 'Publish artifact'
+      displayName: 'publish'
       inputs:
         command: 'publish'
         publishWebProjects: false
         projects: '$(System.DefaultWorkingDirectory)/**/Blog.Web.csproj'
         arguments: '--no-restore --no-build --configuration $(buildConfiguration)'
         modifyOutputPath: false
-    
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
 
 # - stage: BuildWebAPI
 #   displayName: 'Build Web API'
