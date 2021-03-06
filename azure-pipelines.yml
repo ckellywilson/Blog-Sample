@@ -16,8 +16,11 @@ stages:
   pool: 'ubuntu-latest'
 
   jobs:
+  
   - job: BuildWebApi
-    displayName: 'Build Web API Code'    
+    displayName: 'Build Web API Code'
+
+    steps:
     - task: @UseDotNet@2
       displayName: 'Install .net5'
       inputs:
