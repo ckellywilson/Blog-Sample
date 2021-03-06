@@ -35,14 +35,14 @@ stages:
       inputs:
         command: 'build'
         projects: '$(System.DefaultWorkingDirectory)/**/Blog.Web.csproj'
-        arguments: '--no-build --configuration $(buildConfiguration)'
+        arguments: '--no-restore --configuration $(buildConfiguration)'
     - task: DotNetCoreCLI@2
       displayName: 'Publish artifact'
       inputs:
         command: 'publish'
         publishWebProjects: false
         projects: '$(System.DefaultWorkingDirectory)/**/Blog.Web.csproj'
-        arguments: '--no-build --configuration $(buildConfiguration)'
+        arguments: '--no-restore --no-build --configuration $(buildConfiguration)'
         modifyOutputPath: false
     
 
