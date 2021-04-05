@@ -10,28 +10,49 @@ variables:
   buildConfiguration: 'Release'
   buildPlatform: 'Any CPU'
   dotnetVersion: '5.0.200'
+  containerHost: 'blog-pg-115.southcentralus.azurecontainer.io'
 
 stages:
 - stage: Build
-  displayName: 'Build Web Resources'
+  displayName: 'Build Web & DB'
+  pool:
+    vmImage: ubuntu-latest
   jobs:
-  - job: BuildWebAPI
-    displayName: 'Build Web API'
-    pool:
-      vmImage: ubuntu-latest
+  - job: InstallTools
+    displayName: 'Install Tools'  
     steps:
-    - task: UseDotNet@2
-      displayName: 'Install $(dotnetVersion)'
-      inputs:
+     - task: UseDotNet@2
+       displayName: 'Install $(dotnetVersion)'
+       inputs:
         packageType: 'sdk'
         version: '$(dotnetVersion)'
-    - task: CmdLine@2
+     - task: DotNetCoreCLI@2
+       displayName: 'Install Entity Framework'
+       inputs:
+         command: custom
+         custom: tool
+         arguments: 'install --global dotnet-ef'
+
+  - job: DeployDB
+    displayName: 'Deploy DB Changes'
+    steps:
+    - task: Bash@3
+      displayName: 'Update database from ef core project'
       inputs:
+        targetType: 'inline'
         script: |
-          echo 'Install EF Core Tools'
-          dotnet tool install --global dotnet-ef
-          echo 'Check EF Tools'
-          dotnet ef --version
+          echo Run dotnet ef core
+          dotnet ef database update --project '$(System.DefaultWorkingDirectory)/**/Blog.PostgreSQL.EF/Blog.PostgreSQL.EF.csproj'
+          
+          echo "SET PGPASSWORD environment variable"
+          export PGPASSWORD='postgres'
+
+          echo Populate database with default values
+          psql -h ${{ containerHost }} -p 5432 -d blog -U postgres -f '$(System.DefaultWorkingDirectory)/**/Blog.PostgreSQL/post-deploymentscripts/blog_entry_insert.sql'
+
+  - job: BuildWebAPI
+    displayName: 'Build Web API'
+    steps:   
     - task: DotNetCoreCLI@2
       displayName: 'Restore all projects'
       inputs:
