@@ -88,4 +88,6 @@ stages:
         appType: 'webAppLinux'
         appName: ${{ parameters.webAppName }}
         package: '$(System.ArtifactsDirectory)/**/*.zip'
+        runtimeStack: 'DOTNETCORE|5.0'
+        startUpCommand: 'dotnet Blog.Web.dll'
     
