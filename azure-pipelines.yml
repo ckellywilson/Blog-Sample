@@ -50,7 +50,7 @@ stages:
         targetType: 'inline'
         script: |
           echo Run dotnet ef core
-          dotnet ef database update --project '$(System.DefaultWorkingDirectory)/**/Blog.PostgreSQL.EF.csproj'
+          dotnet ef database update --project '$(Build.Repository.LocalPath)/src/Blog.PostgreSQL.EF/Blog.PostgreSQL.EF.csproj'
           
           echo "SET PGPASSWORD environment variable"
           export PGPASSWORD='postgres'
