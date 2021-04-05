@@ -61,7 +61,7 @@ stages:
   #         psql -h '$(containerHost)' -p 5432 -d blog -U postgres -f '$(Build.Repository.LocalPath)/src/Blog.PostgreSQL/post-deploymentscripts/blog_entry_insert.sql'
 
   - job: BuildWebAPI
-    dependsOn: DeployDB
+    # dependsOn: DeployDB
     displayName: 'Build Web API'
     steps:
     - task: UseDotNet@2
