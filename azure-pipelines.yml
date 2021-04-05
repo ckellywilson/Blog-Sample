@@ -21,44 +21,44 @@ stages:
     vmImage: ubuntu-latest
     
   jobs:
-  - job: DeployDB
-    displayName: 'Deploy DB Changes'
-    steps:
-    - task: UseDotNet@2
-      displayName: 'Install $(dotnetVersion)'
-      inputs:
-        packageType: 'sdk'
-        version: '$(dotnetVersion)'
-    - task: DotNetCoreCLI@2
-      displayName: 'Install Entity Framework'
-      inputs:
-         command: custom
-         custom: tool
-         arguments: 'install --global dotnet-ef'
-    - task: DotNetCoreCLI@2
-      displayName: 'Restore all projects'
-      inputs:
-        command: 'restore'
-        projects: '**/*.sln'
-    - task: DotNetCoreCLI@2
-      displayName: 'Build EF PostgreSQL project'
-      inputs:
-        command: 'build'
-        projects: '$(System.DefaultWorkingDirectory)/**/Blog.PostgreSQL.EF.csproj'
-        arguments: '--no-restore --configuration $(buildConfiguration)'
-    - task: Bash@3
-      displayName: 'Update database from ef core project'
-      inputs:
-        targetType: 'inline'
-        script: |
-          echo Run dotnet ef core
-          dotnet ef database update --project '$(Build.Repository.LocalPath)/src/Blog.PostgreSQL.EF/Blog.PostgreSQL.EF.csproj'
+  # - job: DeployDB
+  #   displayName: 'Deploy DB Changes'
+  #   steps:
+  #   - task: UseDotNet@2
+  #     displayName: 'Install $(dotnetVersion)'
+  #     inputs:
+  #       packageType: 'sdk'
+  #       version: '$(dotnetVersion)'
+  #   - task: DotNetCoreCLI@2
+  #     displayName: 'Install Entity Framework'
+  #     inputs:
+  #        command: custom
+  #        custom: tool
+  #        arguments: 'install --global dotnet-ef'
+  #   - task: DotNetCoreCLI@2
+  #     displayName: 'Restore all projects'
+  #     inputs:
+  #       command: 'restore'
+  #       projects: '**/*.sln'
+  #   - task: DotNetCoreCLI@2
+  #     displayName: 'Build EF PostgreSQL project'
+  #     inputs:
+  #       command: 'build'
+  #       projects: '$(System.DefaultWorkingDirectory)/**/Blog.PostgreSQL.EF.csproj'
+  #       arguments: '--no-restore --configuration $(buildConfiguration)'
+  #   - task: Bash@3
+  #     displayName: 'Update database from ef core project'
+  #     inputs:
+  #       targetType: 'inline'
+  #       script: |
+  #         echo Run dotnet ef core
+  #         dotnet ef database update --project '$(Build.Repository.LocalPath)/src/Blog.PostgreSQL.EF/Blog.PostgreSQL.EF.csproj'
           
-          echo "SET PGPASSWORD environment variable"
-          export PGPASSWORD='postgres'
+  #         echo "SET PGPASSWORD environment variable"
+  #         export PGPASSWORD='postgres'
 
-          echo Populate database with default values
-          psql -h '$(containerHost)' -p 5432 -d blog -U postgres -f '$(Build.Repository.LocalPath)/src/Blog.PostgreSQL/post-deploymentscripts/blog_entry_insert.sql'
+  #         echo Populate database with default values
+  #         psql -h '$(containerHost)' -p 5432 -d blog -U postgres -f '$(Build.Repository.LocalPath)/src/Blog.PostgreSQL/post-deploymentscripts/blog_entry_insert.sql'
 
   - job: BuildWebAPI
     dependsOn: DeployDB
@@ -100,20 +100,20 @@ stages:
         ArtifactName: 'drop'
         publishLocation: 'Container'
         
-  - job: DeployAPI
-    displayName: 'Deploy API'
-    dependsOn: BuildWebAPI
-    steps:
-    - task: DownloadBuildArtifacts@0
-      inputs:
-        buildType: 'current'
-        downloadType: 'single'
-        downloadPath: '$(Build.ArtifactsDirectory)'
-        artifactName: 'drop'
-    - task: AzureWebApp@1
-      inputs:
-        azureSubscription: $(azureSubscription)
-        appType: 'webAppLinux'
-        appName: $(webAppName)
-        package: '$(System.ArtifactsDirectory)/**/*.zip'
+  # - job: DeployAPI
+  #   displayName: 'Deploy API'
+  #   dependsOn: BuildWebAPI
+  #   steps:
+  #   - task: DownloadBuildArtifacts@0
+  #     inputs:
+  #       buildType: 'current'
+  #       downloadType: 'single'
+  #       downloadPath: '$(Build.ArtifactsDirectory)'
+  #       artifactName: 'drop'
+  #   - task: AzureWebApp@1
+  #     inputs:
+  #       azureSubscription: $(azureSubscription)
+  #       appType: 'webAppLinux'
+  #       appName: $(webAppName)
+  #       package: '$(System.ArtifactsDirectory)/**/*.zip'
 
