@@ -4,15 +4,15 @@
     "parameters": {
         "sites_blog_092899_webapp_name": {
             "defaultValue": "blog-092899-webapp",
-            "type": "String"
+            "type": "string"
         },
         "serverfarms_blog_092899_appsvc_name": {
             "defaultValue": "blog-092899-appsvc",
-            "type": "String"
+            "type": "string"
         },
         "containerGroups_blog_pg_115_name": {
             "defaultValue": "blog-pg-115",
-            "type": "String"
+            "type": "string"
         }
     },
     "variables": {},
@@ -83,7 +83,6 @@
                 "perSiteScaling": false,
                 "maximumElasticWorkerCount": 1,
                 "isSpot": false,
-                "freeOfferExpirationTime": "2021-04-04T23:27:18.3966667",
                 "reserved": true,
                 "isXenon": false,
                 "hyperV": false,
@@ -128,81 +127,7 @@
                 "httpsOnly": false,
                 "redundancyMode": "None"
             }
-        },
-        {
-            "type": "Microsoft.Web/sites/config",
-            "apiVersion": "2018-11-01",
-            "name": "[concat(parameters('sites_blog_092899_webapp_name'), '/web')]",
-            "location": "South Central US",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_blog_092899_webapp_name'))]"
-            ],
-            "properties": {
-                "numberOfWorkers": 1,
-                "defaultDocuments": [
-                    "Default.htm",
-                    "Default.html",
-                    "Default.asp",
-                    "index.htm",
-                    "index.html",
-                    "iisstart.htm",
-                    "default.aspx",
-                    "index.php",
-                    "hostingstart.html"
-                ],
-                "netFrameworkVersion": "v4.0",
-                "linuxFxVersion": "DOTNETCORE|5.0",
-                "requestTracingEnabled": false,
-                "remoteDebuggingEnabled": false,
-                "remoteDebuggingVersion": "VS2019",
-                "httpLoggingEnabled": false,
-                "logsDirectorySizeLimit": 35,
-                "detailedErrorLoggingEnabled": false,
-                "publishingUsername": "$blog-092899-webapp",
-                "azureStorageAccounts": {},
-                "scmType": "VSTSRM",
-                "use32BitWorkerProcess": true,
-                "webSocketsEnabled": false,
-                "alwaysOn": false,
-                "managedPipelineMode": "Integrated",
-                "virtualApplications": [
-                    {
-                        "virtualPath": "/",
-                        "physicalPath": "site\\wwwroot",
-                        "preloadEnabled": false
-                    }
-                ],
-                "loadBalancing": "LeastRequests",
-                "experiments": {
-                    "rampUpRules": []
-                },
-                "autoHealEnabled": false,
-                "localMySqlEnabled": false,
-                "ipSecurityRestrictions": [
-                    {
-                        "ipAddress": "Any",
-                        "action": "Allow",
-                        "priority": 1,
-                        "name": "Allow all",
-                        "description": "Allow all access"
-                    }
-                ],
-                "scmIpSecurityRestrictions": [
-                    {
-                        "ipAddress": "Any",
-                        "action": "Allow",
-                        "priority": 1,
-                        "name": "Allow all",
-                        "description": "Allow all access"
-                    }
-                ],
-                "scmIpSecurityRestrictionsUseMain": false,
-                "http20Enabled": true,
-                "minTlsVersion": "1.2",
-                "ftpsState": "AllAllowed",
-                "reservedInstanceCount": 0
-            }
-        },
+        },        
         {
             "type": "Microsoft.Web/sites/deployments",
             "apiVersion": "2018-11-01",
