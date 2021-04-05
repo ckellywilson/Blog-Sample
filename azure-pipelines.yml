@@ -48,7 +48,7 @@ stages:
           export PGPASSWORD='postgres'
 
           echo Populate database with default values
-          psql -h ${{ containerHost }} -p 5432 -d blog -U postgres -f '$(System.DefaultWorkingDirectory)/**/Blog.PostgreSQL/post-deploymentscripts/blog_entry_insert.sql'
+          psql -h '$(containerHost)' -p 5432 -d blog -U postgres -f '$(System.DefaultWorkingDirectory)/**/Blog.PostgreSQL/post-deploymentscripts/blog_entry_insert.sql'
 
   - job: BuildWebAPI
     displayName: 'Build Web API'
