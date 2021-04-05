@@ -100,20 +100,20 @@ stages:
         ArtifactName: 'drop'
         publishLocation: 'Container'
         
-  # - job: DeployAPI
-  #   displayName: 'Deploy API'
-  #   dependsOn: BuildWebAPI
-  #   steps:
-  #   - task: DownloadBuildArtifacts@0
-  #     inputs:
-  #       buildType: 'current'
-  #       downloadType: 'single'
-  #       downloadPath: '$(Build.ArtifactsDirectory)'
-  #       artifactName: 'drop'
-  #   - task: AzureWebApp@1
-  #     inputs:
-  #       azureSubscription: $(azureSubscription)
-  #       appType: 'webAppLinux'
-  #       appName: $(webAppName)
-  #       package: '$(System.ArtifactsDirectory)/**/*.zip'
+  - job: DeployAPI
+    displayName: 'Deploy API'
+    dependsOn: BuildWebAPI
+    steps:
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        downloadPath: '$(Build.ArtifactsDirectory)'
+        artifactName: 'drop'
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: $(azureSubscription)
+        appType: 'webAppLinux'
+        appName: $(webAppName)
+        package: '$(System.ArtifactsDirectory)/**/*.zip'
 
