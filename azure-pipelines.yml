@@ -34,6 +34,11 @@ stages:
          custom: tool
          arguments: 'install --global dotnet-ef'
     - task: DotNetCoreCLI@2
+      displayName: 'Restore all projects'
+      inputs:
+        command: 'restore'
+        projects: '**/*.sln'
+    - task: DotNetCoreCLI@2
       displayName: 'Build EF PostgreSQL project'
       inputs:
         command: 'build'
@@ -54,6 +59,7 @@ stages:
           psql -h '$(containerHost)' -p 5432 -d blog -U postgres -f '$(System.DefaultWorkingDirectory)/**/Blog.PostgreSQL/post-deploymentscripts/blog_entry_insert.sql'
 
   - job: BuildWebAPI
+    dependsOn: DeployDB
     displayName: 'Build Web API'
     steps:
     - task: UseDotNet@2
