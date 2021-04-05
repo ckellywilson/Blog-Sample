@@ -17,25 +17,22 @@ stages:
   displayName: 'Build Web & DB'
   pool:
     vmImage: ubuntu-latest
+    
   jobs:
-  - job: InstallTools
-    displayName: 'Install Tools'  
-    steps:
-     - task: UseDotNet@2
-       displayName: 'Install $(dotnetVersion)'
-       inputs:
-        packageType: 'sdk'
-        version: '$(dotnetVersion)'
-     - task: DotNetCoreCLI@2
-       displayName: 'Install Entity Framework'
-       inputs:
-         command: custom
-         custom: tool
-         arguments: 'install --global dotnet-ef'
-
   - job: DeployDB
     displayName: 'Deploy DB Changes'
     steps:
+    - task: UseDotNet@2
+      displayName: 'Install $(dotnetVersion)'
+      inputs:
+        packageType: 'sdk'
+        version: '$(dotnetVersion)'
+    - task: DotNetCoreCLI@2
+      displayName: 'Install Entity Framework'
+      inputs:
+         command: custom
+         custom: tool
+         arguments: 'install --global dotnet-ef'
     - task: Bash@3
       displayName: 'Update database from ef core project'
       inputs:
@@ -52,7 +49,12 @@ stages:
 
   - job: BuildWebAPI
     displayName: 'Build Web API'
-    steps:   
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Install $(dotnetVersion)'
+      inputs:
+        packageType: 'sdk'
+        version: '$(dotnetVersion)'
     - task: DotNetCoreCLI@2
       displayName: 'Restore all projects'
       inputs:
