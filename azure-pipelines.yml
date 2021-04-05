@@ -11,6 +11,8 @@ variables:
   buildPlatform: 'Any CPU'
   dotnetVersion: '5.0.200'
   containerHost: 'blog-pg-115.southcentralus.azurecontainer.io'
+  azureSubscription: 'blog-sample-service-connection'
+  webAppName: 'blog-092899-webapp'
 
 stages:
 - stage: Build
@@ -79,6 +81,12 @@ stages:
         projects: '$(System.DefaultWorkingDirectory)/**/Blog.Web.csproj'
         arguments: '--no-restore --configuration $(buildConfiguration)'
     - task: DotNetCoreCLI@2
+      displayName: 'Execute Unit Tests'
+      inputs:
+        command: test
+        projects: '**/*Tests/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
       displayName: 'publish'
       inputs:
         command: 'publish'
@@ -91,4 +99,21 @@ stages:
         PathtoPublish: '$(Build.ArtifactsStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
+        
+  - job: DeployAPI
+    displayName: 'Deploy API'
+    dependsOn: BuildWebAPI
+    steps:
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        downloadPath: '$(Build.ArtifactsStagingDirectory)'
+        artifactName: 'drop'
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: $(azureSubscription)
+        appType: 'webAppLinux'
+        appName: $(webAppName)
+        package: '$(System.ArtifactsDirectory)/**/*.zip'
 
