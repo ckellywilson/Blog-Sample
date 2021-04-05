@@ -33,6 +33,12 @@ stages:
          command: custom
          custom: tool
          arguments: 'install --global dotnet-ef'
+    - task: DotNetCoreCLI@2
+      displayName: 'Build EF PostgreSQL project'
+      inputs:
+        command: 'build'
+        projects: '$(System.DefaultWorkingDirectory)/**/Blog.PostgreSQL.EF.csproj'
+        arguments: '--no-restore --configuration $(buildConfiguration)'
     - task: Bash@3
       displayName: 'Update database from ef core project'
       inputs:
