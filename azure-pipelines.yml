@@ -108,7 +108,7 @@ stages:
       inputs:
         buildType: 'current'
         downloadType: 'single'
-        downloadPath: '$(Build.ArtifactsStagingDirectory)'
+        downloadPath: '$(Build.ArtifactsDirectory)'
         artifactName: 'drop'
     - task: AzureWebApp@1
       inputs:
