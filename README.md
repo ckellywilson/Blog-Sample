@@ -39,4 +39,4 @@ _Test Api_
 
 # Updates
 _2020-11-26_
-* Change project references from `netcoreapp3.1` to `net5.0`, as per [Migrate from ASP.NET Core 3.1 to 5.0](https://docs.microsoft.com/en-us/aspnet/core/migration/31-to-50?view=aspnetcore-5.0&tabs=visual-studio)
+* Change project references from `netcoreapp3.1` to `net6.0`, as per [Migrate from ASP.NET Core 3.1 to 5.0](https://docs.microsoft.com/en-us/aspnet/core/migration/31-to-50?view=aspnetcore-5.0&tabs=visual-studio)
