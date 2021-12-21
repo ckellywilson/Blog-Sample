@@ -2,6 +2,5 @@ obj
 bin
 .idea
 .vs
-.vscode
 *.csproj.user
 TestResults
