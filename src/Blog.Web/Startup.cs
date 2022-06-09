@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.ApplicationInsights;
 
 namespace Blog.Web
 {
@@ -19,7 +18,7 @@ namespace Blog.Web
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             _connectionString = Configuration.GetConnectionString("blog");
         }
 
@@ -33,7 +32,7 @@ namespace Blog.Web
             services.AddControllers();
 
             // The following line enables Application Insights telemetry collection.
-            services.AddApplicationInsightsTelemetry();
+            // services.AddApplicationInsightsTelemetry();
 
             services.AddMvc()
                 .AddNewtonsoftJson(
