@@ -8,11 +8,11 @@ namespace Blog.Web.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly TelemetryClient telemetryClient;
+        // private readonly TelemetryClient telemetryClient;
 
         public ValuesController(TelemetryClient telemetryClient)
         {
-            this.telemetryClient = telemetryClient;
+            // this.telemetryClient = telemetryClient;
         }
         // GET api/values
         [HttpGet]
