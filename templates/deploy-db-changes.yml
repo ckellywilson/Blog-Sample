@@ -5,6 +5,8 @@ parameters:
 stages:
 - stage: DeployDBChanges
   displayName: 'Deploy DB Changes'
+  pool:
+      vmImage: 'ubuntu-latest'
   jobs:
   - job: DeployDBChanges
     displayName: 'Deploy DB Changes'

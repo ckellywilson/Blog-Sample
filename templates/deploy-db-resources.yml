@@ -7,6 +7,8 @@ parameters:
 stages:
 - stage: DeployDBResources
   displayName: 'Deploy DB Resources'
+  pool:
+      vmImage: 'ubuntu-latest'
   jobs:
   - job: CreateDockerContainer
     displayName: 'Create Docker Container'

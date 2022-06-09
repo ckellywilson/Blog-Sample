@@ -10,6 +10,8 @@ parameters:
 stages:
 - stage: DeployWebResources
   displayName: 'Deploy Web Resources'
+  pool:
+      vmImage: 'ubuntu-latest'
   jobs:
   - job: DeployWebResources
     displayName: 'Deploy Web Resources'
