@@ -23,13 +23,26 @@ stages:
         arguments: 'install --global dotnet-ef'
 
     - task: Bash@3
+      displayName: 'Build Project'
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "Build Solution"
+          dotnet build '${{ parameters.sourcePath }}/Blog.sln'
+
+    - task: Bash@3
       displayName: 'Update database from ef core project'
       inputs:
         targetType: 'inline'
         script: |
-          echo Run dotnet ef core
+          echo "Run dotnet ef core"
           dotnet ef database update --project '${{ parameters.sourcePath }}/Blog.PostgreSQL.EF/Blog.PostgreSQL.EF.csproj'
-          
+
+    - task: Bash@3
+      displayName: 'Insert default values'
+      inputs:
+        targetType: 'inline'
+        script: |          
           echo "SET PGPASSWORD environment variable"
           export PGPASSWORD='postgres'
 
