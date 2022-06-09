@@ -11,9 +11,9 @@ stages:
     steps:
 
     - task: UseDotNet@2
-      displayName: 'Install 5.x version of .NET'
+      displayName: 'Install 6.x version of .NET'
       inputs:
-        version: '5.x'
+        version: '6.x'
 
     - task: DotNetCoreCLI@2
       displayName: 'Install Entity Framework'
