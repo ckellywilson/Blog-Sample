@@ -12,6 +12,7 @@ namespace Blog.Repository.Interfaces
     /// <typeparam name="TEntity"></typeparam>
     public interface ISelectRepository<TEntity> where TEntity : class
     {
+        ///Comment 1
         Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null);
         Task<TEntity> GetAsync(int id, params Expression<Func<TEntity, object>>[] includeProperties);
     }
