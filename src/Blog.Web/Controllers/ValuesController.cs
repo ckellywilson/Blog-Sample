@@ -18,7 +18,7 @@ namespace Blog.Web.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            telemetryClient.TrackEvent("ValuesController.Get() called");
+            // telemetryClient.TrackEvent("ValuesController.Get() called");
             return new[] { "value1", "value2", "value3" };
         }
 
