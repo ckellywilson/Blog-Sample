@@ -28,7 +28,7 @@ stages:
     appServiceName: 'blog-092899-appsvc'
     sku: 'B1'
     webAppName: 'blog-092899-webapp'
-    runtime: 'DOTNET|5.0'
+    runtime: 'DOTNETCORE:6.0'
 
 - template: templates/deploy-web-changes.yml
   parameters:

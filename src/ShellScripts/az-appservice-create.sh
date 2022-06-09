@@ -13,4 +13,4 @@ echo Create appservice $appservicename
 az appservice plan create --resource-group $resourcegroup --name $appservicename --location $location --sku $sku --is-linux
 
 echo Create webapp $webappname
-az webapp create --resource-group $resourcegroup --plan $appservicename --name $webappname --runtime "DOTNET|5.0"
+az webapp create --resource-group $resourcegroup --plan $appservicename --name $webappname --runtime "DOTNETCORE:6.0"
